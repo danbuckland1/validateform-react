@@ -1,7 +1,49 @@
 import React, { Component } from "react";
 import "./App.css";
 
+const formValid = formErrors => {
+  let valid = true;
+
+  Object.values(formErrors).forEach(val => {
+    val.length > 0 && (valid = false);
+  });
+
+};
+
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      firstName: null,
+      lastName: null,
+      email: null,
+      password: null,
+      formErrors: {
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: ""
+      }
+    };
+  }
+
+  handleSubmit = e => {
+    e.preventDefault();
+
+    if (formValid(this.state.formErrors)) {
+      console.log(`
+    ---Submitting---
+    First Name: ${this.state.firstName}
+    Last Name: ${this.state.lastName}
+    Email: ${this.state.email}
+    Password: ${this.state.password}
+    `);
+    } else {
+      console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+    }
+  };
+
   render() {
     return (
       <div className="wrapper">
@@ -57,8 +99,8 @@ class App extends Component {
               />
             </div>
             <div className="createAccount">
-            <button type="submit">Create Account</button>
-            <small>Already Have and Account?</small>
+              <button type="submit">Create Account</button>
+              <small>Already Have and Account?</small>
             </div>
           </form>
         </div>
